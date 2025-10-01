@@ -25,19 +25,24 @@ window.hudsonAmchartsInit = function (id) {
 	// Parse data safely
 	/** @type {ChartNode} */
 	let chartData;
+
 	try {
 		const textContent = dataEl.textContent || dataEl.innerText || "";
+
 		if (!textContent.trim()) {
 			console.error("Hudson amCharts: No data provided");
 			return;
 		}
+
 		chartData = JSON.parse(textContent);
 	} catch (e) {
 		console.error("Hudson amCharts: Failed to parse data", e);
 		return;
 	}
 
-	// Helper to check if in iframe (Elementor preview)
+	/**
+	 * Helper to check if in iframe (Elementor preview)
+	 */
 	function inIframe() {
 		try {
 			return window.self !== window.top;
@@ -46,8 +51,9 @@ window.hudsonAmchartsInit = function (id) {
 		}
 	}
 
-	// Navigation helper
 	/**
+	 * Navigation helper.
+	 *
 	 * @param {string} url
 	 */
 	function go(url) {
@@ -73,13 +79,17 @@ window.hudsonAmchartsInit = function (id) {
 
 		// ---------- Root ----------
 		const root = am5.Root.new(id);
+
 		root.setThemes([
 			am5themes_Animated.new(root),
 			am5themes_Responsive.new(root),
 		]);
+
 		root.dom.style.background = "transparent";
+
 		// @ts-ignore - svgContainer exists at runtime but not in type definitions
 		if (root.svgContainer) root.svgContainer.style.background = "transparent";
+
 		root.container.set(
 			"background",
 			am5.Rectangle.new(root, { fillOpacity: 0, strokeOpacity: 0 }),
@@ -102,13 +112,33 @@ window.hudsonAmchartsInit = function (id) {
 		);
 
 		// keep clicks clean
-		series.nodes.template.setAll({ draggable: false });
+		series.nodes.template.setAll({
+			draggable: false,
+			interactive: true,
+			cursorOverStyle: "default",
+		});
 
-		// No tooltips
-		series.circles.template.set("tooltipText", undefined);
-		series.outerCircles.template.set("tooltipText", undefined);
+		// No tooltips - explicitly disable for all elements
+		series.circles.template.setAll({
+			tooltipText: undefined,
+			interactive: true,
+			cursorOverStyle: "default",
+		});
+
+		series.outerCircles.template.setAll({
+			tooltipText: undefined,
+			interactive: true,
+			cursorOverStyle: "default",
+		});
+
 		series.nodes.template.set("tooltipText", undefined);
-		series.labels.template.set("tooltipText", undefined);
+
+		series.labels.template.setAll({
+			tooltipText: undefined,
+			interactive: true,
+			cursorOverStyle: "default",
+		});
+
 		series.links.template.set("tooltipText", undefined);
 
 		// Hide wrapper (depth 0)
@@ -117,6 +147,7 @@ window.hudsonAmchartsInit = function (id) {
 			// @ts-ignore - depth exists at runtime
 			return di ? di.get("depth") !== 0 : vis;
 		});
+
 		series.nodes.template.adapters.add("opacity", function (op, target) {
 			const di = target.dataItem;
 			// @ts-ignore - depth exists at runtime
@@ -160,6 +191,7 @@ window.hudsonAmchartsInit = function (id) {
 			}
 			return [h, s, l];
 		}
+
 		/**
 		 * @param {number} h
 		 * @param {number} s
@@ -181,7 +213,9 @@ window.hudsonAmchartsInit = function (id) {
 				if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
 				return p;
 			};
+
 			let r, g, b;
+
 			if (s === 0) {
 				r = g = b = l;
 			} else {
@@ -191,8 +225,10 @@ window.hudsonAmchartsInit = function (id) {
 				g = hue2rgb(p, q, h);
 				b = hue2rgb(p, q, h - 1 / 3);
 			}
+
 			return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
 		}
+
 		/**
 		 * @param {string} hex
 		 * @param {number} satFactor
@@ -201,6 +237,7 @@ window.hudsonAmchartsInit = function (id) {
 		 */
 		function lightenDesaturate(hex, satFactor, lightLift) {
 			const h = hex.replace("#", "");
+
 			const f =
 				h.length === 3
 					? h
@@ -208,20 +245,30 @@ window.hudsonAmchartsInit = function (id) {
 							.map((c) => c + c)
 							.join("")
 					: h;
+
 			const v = parseInt(f, 16);
+
 			const r = (v >> 16) & 255,
 				g = (v >> 8) & 255,
 				b = v & 255;
+
 			let [H, S, L] = rgbToHsl(r, g, b);
+
 			S = Math.max(0, Math.min(1, S * satFactor));
+
 			if (S < 0.18) S = 0.18;
+
 			L = Math.max(0, Math.min(1, Math.min(0.98, L + lightLift)));
 			const [r2, g2, b2] = hslToRgb(H, S, L);
+
 			/** @param {number} x */
 			const toHex = (x) => x.toString(16).padStart(2, "0");
+
 			return "#" + toHex(r2) + toHex(g2) + toHex(b2);
 		}
+
 		const basePalette = ["#7a8187", "#33a1af", "#b2252b", "#86a873", "#bb9f06"];
+
 		/**
 		 * @param {ChartNode} node
 		 * @param {string} parentHex
@@ -231,25 +278,30 @@ window.hudsonAmchartsInit = function (id) {
 		function decorateColors(node, parentHex, depth, siblingIndex) {
 			let myHex = parentHex;
 			if (depth === 1) myHex = basePalette[siblingIndex % basePalette.length];
+
 			node.nodeSettings = node.nodeSettings || {};
 			node.outerSettings = node.outerSettings || {};
 			node.nodeSettings.fill = am5.color(myHex);
+
 			if (node.children && node.children.length) {
 				for (let i = 0; i < node.children.length; i++) {
 					const child = node.children[i];
 					const childHex = lightenDesaturate(myHex, 0.85, 0.15);
+
 					child.nodeSettings = child.nodeSettings || {};
 					child.outerSettings = child.outerSettings || {};
 					child.nodeSettings.fill = am5.color(childHex);
 					child.outerSettings.stroke = am5.color(childHex);
 					child.outerSettings.fill = am5.color(childHex);
 					child.outerSettings.fillOpacity = 0.12;
+
 					if (child.children && child.children.length) {
 						decorateColors(child, childHex, depth + 1, i);
 					}
 				}
 			}
 		}
+
 		decorateColors(chartData, basePalette[0], 0, 0);
 		series.circles.template.setAll({ templateField: "nodeSettings" });
 		series.outerCircles.template.setAll({ templateField: "outerSettings" });
@@ -261,6 +313,7 @@ window.hudsonAmchartsInit = function (id) {
 			if (w <= 1024) return "tablet";
 			return "desktop";
 		}
+
 		const R = {
 			mobile: {
 				parent: 56,
@@ -293,6 +346,7 @@ window.hudsonAmchartsInit = function (id) {
 				labelFS: 14,
 			},
 		};
+
 		/**
 		 * @param {string} name
 		 * @param {"mobile" | "tablet" | "desktop"} bp
@@ -305,6 +359,7 @@ window.hudsonAmchartsInit = function (id) {
 			const lineCount = lines.length;
 			return Math.max(cfg.min, longest * cfg.unit + (lineCount - 1) * 6);
 		}
+
 		/**
 		 * @param {any} di - DataItem
 		 * @returns {number}
@@ -329,10 +384,12 @@ window.hudsonAmchartsInit = function (id) {
 			r = Math.max(r, Math.min(parentR * 0.6, cfg.min * 0.9));
 			return r;
 		}
+
 		series.circles.template.adapters.add("radius", function (radius, target) {
 			const di = target.dataItem;
 			return di ? computeRadius(di) : radius;
 		});
+
 		series.outerCircles.template.adapters.add(
 			"radius",
 			function (radius, target) {
@@ -340,6 +397,7 @@ window.hudsonAmchartsInit = function (id) {
 				return di ? computeRadius(di) : radius;
 			},
 		);
+
 		series.labels.template.setAll({
 			oversizedBehavior: "wrap",
 			textAlign: "center",
@@ -347,9 +405,11 @@ window.hudsonAmchartsInit = function (id) {
 			centerY: am5.percent(50),
 			isMeasured: true,
 		});
+
 		series.labels.template.adapters.add("fontSize", function () {
 			return R[getBP()].labelFS;
 		});
+
 		series.labels.template.adapters.add("maxWidth", function (max, target) {
 			const di = target.dataItem;
 			if (!di) return max;
@@ -370,6 +430,23 @@ window.hudsonAmchartsInit = function (id) {
 			// @ts-ignore - children exists at runtime
 			rootDI.children.each(function (/** @type {any} */ pdi) {
 				pdi.set("expanded", false);
+				// Ensure parent circles remain interactive in Brave
+				const pNode = pdi.get("node");
+				if (pNode) {
+					pNode.set("interactive", true);
+					pNode.set("focusable", true);
+				}
+				const pCircle = pdi.get("circle");
+				if (pCircle) {
+					pCircle.set("interactive", true);
+					pCircle.set("focusable", true);
+				}
+				const pOuter = pdi.get("outerCircle");
+				if (pOuter) {
+					pOuter.set("interactive", true);
+					pOuter.set("focusable", true);
+				}
+
 				if (pdi.children) {
 					pdi.children.each(function (/** @type {any} */ cdi) {
 						cdi.set("expanded", false);
@@ -426,6 +503,7 @@ window.hudsonAmchartsInit = function (id) {
 				});
 			}
 		}
+
 		/** @param {any} pdi */
 		function showParentChildrenOnly(pdi) {
 			pdi.set("expanded", true);
@@ -436,6 +514,19 @@ window.hudsonAmchartsInit = function (id) {
 					if (cn) {
 						cn.set("visible", true);
 						cn.set("opacity", 1);
+						// Ensure child nodes are interactive in Brave
+						cn.set("interactive", true);
+						cn.set("focusable", true);
+					}
+					const cCircle = cdi.get("circle");
+					if (cCircle) {
+						cCircle.set("interactive", true);
+						cCircle.set("focusable", true);
+					}
+					const cOuter = cdi.get("outerCircle");
+					if (cOuter) {
+						cOuter.set("interactive", true);
+						cOuter.set("focusable", true);
 					}
 					const cl = cdi.get("link");
 					if (cl) cl.set("visible", true);
@@ -461,6 +552,7 @@ window.hudsonAmchartsInit = function (id) {
 			const dc = di?.dataContext || {};
 			return !(dc.children && dc.children.length);
 		}
+
 		/** @param {any} di */
 		function isClickable(di) {
 			const dc = di?.dataContext || {};
@@ -470,21 +562,33 @@ window.hudsonAmchartsInit = function (id) {
 		// Pointer cursor only on clickable leaves
 		/** @param {any} di */
 		function updateCursor(di) {
-			root.dom.style.cursor = isClickable(di) ? "pointer" : "default";
+			// For Brave compatibility, also check if node has children (expandable)
+			const dc = di?.dataContext || {};
+			const hasChildren = dc.children && dc.children.length > 0;
+			const shouldShowPointer = isClickable(di) || hasChildren;
+			root.dom.style.cursor = shouldShowPointer ? "pointer" : "default";
 		}
+
 		/** @param {any} e */
-		const onOver = (e) => updateCursor(e.target && e.target.dataItem);
+		const onOver = (e) => {
+			if (e && e.target && e.target.dataItem) {
+				updateCursor(e.target.dataItem);
+			}
+		};
+
 		const onOut = () => {
 			root.dom.style.cursor = "default";
 		};
-		series.nodes.template.events.on("pointerover", onOver);
-		series.labels.template.events.on("pointerover", onOver);
+
+		// Attach pointer events - circles first for priority in Brave
 		series.circles.template.events.on("pointerover", onOver);
 		series.outerCircles.template.events.on("pointerover", onOver);
-		series.nodes.template.events.on("pointerout", onOut);
-		series.labels.template.events.on("pointerout", onOut);
+		series.labels.template.events.on("pointerover", onOver);
+		series.nodes.template.events.on("pointerover", onOver);
 		series.circles.template.events.on("pointerout", onOut);
 		series.outerCircles.template.events.on("pointerout", onOut);
+		series.labels.template.events.on("pointerout", onOut);
+		series.nodes.template.events.on("pointerout", onOut);
 
 		// Click handling
 		/** @param {any} di */
@@ -498,6 +602,7 @@ window.hudsonAmchartsInit = function (id) {
 
 			// @ts-ignore - depth exists at runtime
 			const depth = di.get("depth");
+
 			if (depth === 1) {
 				// parent
 				const rootDI = series.dataItems[0];
@@ -509,6 +614,7 @@ window.hudsonAmchartsInit = function (id) {
 				);
 				return;
 			}
+
 			if (depth === 2) {
 				// child
 				const expand = !di.get("expanded");
@@ -518,11 +624,19 @@ window.hudsonAmchartsInit = function (id) {
 		}
 
 		/** @param {any} e */
-		const onClick = (e) => handleClick(e.target && e.target.dataItem);
-		series.nodes.template.events.on("click", onClick);
-		series.labels.template.events.on("click", onClick);
+		const onClick = (e) => {
+			// Stop propagation to prevent event conflicts in Brave browser
+			if (e && e.originalEvent && e.originalEvent.stopPropagation) {
+				e.originalEvent.stopPropagation();
+			}
+			handleClick(e.target && e.target.dataItem);
+		};
+
+		// Attach click handlers with higher priority for circles (primary click targets)
 		series.circles.template.events.on("click", onClick);
 		series.outerCircles.template.events.on("click", onClick);
+		series.labels.template.events.on("click", onClick);
+		series.nodes.template.events.on("click", onClick);
 
 		// Safe resize
 		// @ts-ignore - _renderer is private but needed for manual resize
@@ -535,8 +649,9 @@ window.hudsonAmchartsInit = function (id) {
 	}
 
 	// Try to start, with retry logic for delayed script loading
-	let attempts = 0,
-		max = 200;
+	let attempts = 0;
+	let max = 200;
+
 	(function tick() {
 		attempts++;
 		if (start() === true) return;
