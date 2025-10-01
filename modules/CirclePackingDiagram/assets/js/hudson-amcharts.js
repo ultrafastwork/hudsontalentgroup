@@ -647,12 +647,10 @@ window.hudsonAmchartsInit = function (id) {
 		series.labels.template.events.on("click", onClick);
 		series.nodes.template.events.on("click", onClick);
 
-		// Safe resize
-		// @ts-ignore - _renderer is private but needed for manual resize
-		if (root._renderer && typeof root._renderer.resize === "function") {
-			// @ts-ignore - _renderer is private but needed for manual resize
-			window.addEventListener("resize", () => root._renderer.resize());
-		}
+		// Resize handling
+		// Rely on amCharts 5 built-in ResizeObserver. Avoid calling private
+		// renderer resize during window resize, which can cause race conditions
+		// and hit-testing errors on some browsers.
 
 		return true;
 	}
