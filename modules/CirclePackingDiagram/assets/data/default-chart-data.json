@@ -1,0 +1,365 @@
+{
+  "value": 0,
+  "children": [
+    {
+      "name": "Americas",
+      "children": [
+        {
+          "name": "RPO",
+          "children": [
+            {
+              "name": "Workforce\nscaling",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=rpo"
+            }
+          ]
+        },
+        {
+          "name": "Hudson\nTalent\nFusion",
+          "children": [
+            {
+              "name": "Hudson\nIQ",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=hudson-talent-fusion"
+            },
+            {
+              "name": "Digitize\ntalent\nacquisition",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=hudson-talent-fusion"
+            },
+            {
+              "name": "Augment\ntalent",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=hudson-talent-fusion"
+            },
+            {
+              "name": "Workforce\nstabilization",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=hudson-talent-fusion"
+            }
+          ]
+        },
+        {
+          "name": "Contingent\nWorkforce",
+          "children": [
+            {
+              "name": "Workforce\nscaling",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=contingent-workforce"
+            }
+          ]
+        },
+        {
+          "name": "Total\nTalent\nSolutions",
+          "children": [
+            {
+              "name": "Workforce\nscaling",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=total-talent-solutions"
+            }
+          ]
+        },
+        {
+          "name": "Sourcing\nSolutions",
+          "children": [
+            {
+              "name": "Workforce\nscaling",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=sourcing-solutions"
+            },
+            {
+              "name": "Navigate\ncomplex\nhiring",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=sourcing-solutions"
+            }
+          ]
+        },
+        {
+          "name": "Executive\nSearch",
+          "children": [
+            {
+              "name": "Navigate\ncomplex\nhiring",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=executive-search"
+            }
+          ]
+        },
+        {
+          "name": "Recruitment\nTechnology",
+          "children": [
+            {
+              "name": "Digitizing\ntalent\nacquisition",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=recruitment-technology"
+            },
+            {
+              "name": "Augmenting\ntalent\nacquisition",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=recruitment-technology"
+            },
+            {
+              "name": "Navigate\ncomplex\nhiring",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=recruitment-technology"
+            }
+          ]
+        },
+        {
+          "name": "Talent\nAdvisory",
+          "children": [
+            {
+              "name": "Employer\nbranding",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=talent-advisory"
+            },
+            {
+              "name": "Workforce\nstabilization",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=talent-advisory"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "EMEA",
+      "children": [
+        {
+          "name": "RPO",
+          "children": [
+            {
+              "name": "Workforce\nscaling",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=rpo"
+            }
+          ]
+        },
+        {
+          "name": "Hudson\nTalent\nFusion",
+          "children": [
+            {
+              "name": "Hudson\nIQ",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=hudson-talent-fusion"
+            },
+            {
+              "name": "Digitize\ntalent\nacquisition",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=hudson-talent-fusion"
+            },
+            {
+              "name": "Augment\ntalent",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=hudson-talent-fusion"
+            },
+            {
+              "name": "Workforce\nstabilization",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=hudson-talent-fusion"
+            }
+          ]
+        },
+        {
+          "name": "Contingent\nWorkforce",
+          "children": [
+            {
+              "name": "Workforce\nscaling",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=contingent-workforce"
+            }
+          ]
+        },
+        {
+          "name": "Total\nTalent\nSolutions",
+          "children": [
+            {
+              "name": "Workforce\nscaling",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=total-talent-solutions"
+            }
+          ]
+        },
+        {
+          "name": "Sourcing\nSolutions",
+          "children": [
+            {
+              "name": "Workforce\nscaling",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=sourcing-solutions"
+            },
+            {
+              "name": "Navigate\ncomplex\nhiring",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=sourcing-solutions"
+            }
+          ]
+        },
+        {
+          "name": "Executive\nSearch",
+          "children": [
+            {
+              "name": "Navigate\ncomplex\nhiring",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=executive-search"
+            }
+          ]
+        },
+        {
+          "name": "Recruitment\nTechnology",
+          "children": [
+            {
+              "name": "Digitizing\ntalent\nacquisition",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=recruitment-technology"
+            },
+            {
+              "name": "Augmenting\ntalent\nacquisition",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=recruitment-technology"
+            },
+            {
+              "name": "Navigate\ncomplex\nhiring",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=recruitment-technology"
+            }
+          ]
+        },
+        {
+          "name": "Talent\nAdvisory",
+          "children": [
+            {
+              "name": "Employer\nbranding",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=talent-advisory"
+            },
+            {
+              "name": "Workforce\nstabilization",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=talent-advisory"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "APAC",
+      "children": [
+        {
+          "name": "RPO",
+          "children": [
+            {
+              "name": "Workforce\nscaling",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=rpo"
+            }
+          ]
+        },
+        {
+          "name": "Hudson\nTalent\nFusion",
+          "children": [
+            {
+              "name": "Hudson\nIQ",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=hudson-talent-fusion"
+            },
+            {
+              "name": "Digitize\ntalent\nacquisition",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=hudson-talent-fusion"
+            },
+            {
+              "name": "Augment\ntalent",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=hudson-talent-fusion"
+            },
+            {
+              "name": "Workforce\nstabilization",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=hudson-talent-fusion"
+            }
+          ]
+        },
+        {
+          "name": "Contingent\nWorkforce",
+          "children": [
+            {
+              "name": "Workforce\nscaling",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=contingent-workforce"
+            }
+          ]
+        },
+        {
+          "name": "Total\nTalent\nSolutions",
+          "children": [
+            {
+              "name": "Workforce\nscaling",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=total-talent-solutions"
+            }
+          ]
+        },
+        {
+          "name": "Sourcing\nSolutions",
+          "children": [
+            {
+              "name": "Workforce\nscaling",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=sourcing-solutions"
+            },
+            {
+              "name": "Navigate\ncomplex\nhiring",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=sourcing-solutions"
+            }
+          ]
+        },
+        {
+          "name": "Executive\nSearch",
+          "children": [
+            {
+              "name": "Navigate\ncomplex\nhiring",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=executive-search"
+            }
+          ]
+        },
+        {
+          "name": "Recruitment\nTechnology",
+          "children": [
+            {
+              "name": "Digitizing\ntalent\nacquisition",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=recruitment-technology"
+            },
+            {
+              "name": "Augmenting\ntalent\nacquisition",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=recruitment-technology"
+            },
+            {
+              "name": "Navigate\ncomplex\nhiring",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=recruitment-technology"
+            }
+          ]
+        },
+        {
+          "name": "Talent\nAdvisory",
+          "children": [
+            {
+              "name": "Employer\nbranding",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=talent-advisory"
+            },
+            {
+              "name": "Workforce\nstabilization",
+              "value": 2,
+              "url": "https://hudsontalent.com/?solutions=talent-advisory"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

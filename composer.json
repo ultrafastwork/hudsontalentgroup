@@ -1,0 +1,19 @@
+{
+    "name": "mapsteps/hudsontalentgroup",
+    "description": "WordPress internal plugin for Hudson Talent Group",
+    "type": "project",
+    "license": "GPL-3.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "Mapsteps\\Htg\\": "",
+            "Mapsteps\\Htg\\Module\\": "modules/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Bagus",
+            "email": "25834188+contactjavas@users.noreply.github.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
