@@ -4,7 +4,7 @@ declare( strict_types=1 );
 
 namespace Mapsteps\Htg;
 
-use Mapsteps\Htg\Modules\CirclePackingDiagram\DiagramSetup;
+use Mapsteps\Htg\Module\CirclePackingDiagram\DiagramSetup;
 
 class App
 {

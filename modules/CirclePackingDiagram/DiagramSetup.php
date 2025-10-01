@@ -2,7 +2,7 @@
 
 declare( strict_types=1 );
 
-namespace Mapsteps\Htg\Modules\CirclePackingDiagram;
+namespace Mapsteps\Htg\Module\CirclePackingDiagram;
 
 class DiagramSetup
 {
