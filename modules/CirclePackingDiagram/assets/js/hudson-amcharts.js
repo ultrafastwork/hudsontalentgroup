@@ -511,25 +511,33 @@ window.hudsonAmchartsInit = function (id) {
 				pdi.children.each(function (/** @type {any} */ cdi) {
 					cdi.set("expanded", false); // keep grandchildren hidden
 					const cn = cdi.get("node");
+
 					if (cn) {
 						cn.set("visible", true);
 						cn.set("opacity", 1);
+
 						// Ensure child nodes are interactive in Brave
 						cn.set("interactive", true);
 						cn.set("focusable", true);
 					}
+
 					const cCircle = cdi.get("circle");
+
 					if (cCircle) {
 						cCircle.set("interactive", true);
 						cCircle.set("focusable", true);
 					}
+
 					const cOuter = cdi.get("outerCircle");
+
 					if (cOuter) {
 						cOuter.set("interactive", true);
 						cOuter.set("focusable", true);
 					}
+
 					const cl = cdi.get("link");
 					if (cl) cl.set("visible", true);
+
 					if (cdi.children) {
 						cdi.children.each(function (/** @type {any} */ gdi) {
 							gdi.set("expanded", false);
@@ -595,6 +603,7 @@ window.hudsonAmchartsInit = function (id) {
 		function handleClick(di) {
 			if (!di) return;
 			const dc = di.dataContext || {};
+
 			if (isClickable(di)) {
 				go(dc.url); // ONLY grandchildren navigate
 				return;
