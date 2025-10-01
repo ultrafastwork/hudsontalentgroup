@@ -108,38 +108,24 @@ window.hudsonAmchartsInit = function (id) {
 				idField: "name",
 				manyBodyStrength: -30,
 				centerStrength: 0.8,
+				linkWithStrength: 0.5,
 			}),
 		);
 
 		// keep clicks clean
-		series.nodes.template.setAll({
-			draggable: false,
-			interactive: true,
-			cursorOverStyle: "default",
-		});
+		series.nodes.template.setAll({ draggable: false });
 
-		// No tooltips - explicitly disable for all elements
-		series.circles.template.setAll({
-			tooltipText: undefined,
-			interactive: true,
-			cursorOverStyle: "default",
-		});
-
-		series.outerCircles.template.setAll({
-			tooltipText: undefined,
-			interactive: true,
-			cursorOverStyle: "default",
-		});
-
-		series.nodes.template.set("tooltipText", undefined);
-
-		series.labels.template.setAll({
-			tooltipText: undefined,
-			interactive: true,
-			cursorOverStyle: "default",
-		});
-
-		series.links.template.set("tooltipText", undefined);
+		// No tooltips
+		// @ts-ignore - null is accepted at runtime
+		series.circles.template.set("tooltipText", null);
+		// @ts-ignore - null is accepted at runtime
+		series.outerCircles.template.set("tooltipText", null);
+		// @ts-ignore - null is accepted at runtime
+		series.nodes.template.set("tooltipText", null);
+		// @ts-ignore - null is accepted at runtime
+		series.labels.template.set("tooltipText", null);
+		// @ts-ignore - null is accepted at runtime
+		series.links.template.set("tooltipText", null);
 
 		// Hide wrapper (depth 0)
 		series.nodes.template.adapters.add("visible", function (vis, target) {
@@ -603,15 +589,14 @@ window.hudsonAmchartsInit = function (id) {
 		function handleClick(di) {
 			if (!di) return;
 			const dc = di.dataContext || {};
-
+			
 			if (isClickable(di)) {
-				go(dc.url); // ONLY grandchildren navigate
+				go(dc.url);
 				return;
 			}
 
 			// @ts-ignore - depth exists at runtime
 			const depth = di.get("depth");
-
 			if (depth === 1) {
 				// parent
 				const rootDI = series.dataItems[0];
@@ -623,7 +608,6 @@ window.hudsonAmchartsInit = function (id) {
 				);
 				return;
 			}
-
 			if (depth === 2) {
 				// child
 				const expand = !di.get("expanded");
@@ -634,18 +618,17 @@ window.hudsonAmchartsInit = function (id) {
 
 		/** @param {any} e */
 		const onClick = (e) => {
-			// Stop propagation to prevent event conflicts in Brave browser
-			if (e && e.originalEvent && e.originalEvent.stopPropagation) {
+			if (e && e.originalEvent) {
+				// Prevent duplicate calls from nested elements
 				e.originalEvent.stopPropagation();
 			}
-			handleClick(e.target && e.target.dataItem);
+			handleClick(e && e.target && e.target.dataItem);
 		};
-
-		// Attach click handlers with higher priority for circles (primary click targets)
-		series.circles.template.events.on("click", onClick);
-		series.outerCircles.template.events.on("click", onClick);
-		series.labels.template.events.on("click", onClick);
+		// Attach to nodes only - this captures all clicks on circles, labels, etc.
 		series.nodes.template.events.on("click", onClick);
+
+		// Data + colors final
+		series.data.setAll([chartData]);
 
 		// Resize handling
 		// Rely on amCharts 5 built-in ResizeObserver. Avoid calling private
