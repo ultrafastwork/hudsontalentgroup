@@ -72,7 +72,7 @@ window.hudsonAmchartsInit = function (id) {
 		if (!libsLoaded()) return false;
 
 		// ---------- Root ----------
-		var root = am5.Root.new(id);
+		const root = am5.Root.new(id);
 		root.setThemes([
 			am5themes_Animated.new(root),
 			am5themes_Responsive.new(root),
@@ -86,7 +86,7 @@ window.hudsonAmchartsInit = function (id) {
 		);
 
 		// ---------- Series ----------
-		var series = root.container.children.push(
+		const series = root.container.children.push(
 			am5hierarchy.ForceDirected.new(root, {
 				singleBranchOnly: true, // one expanded parent at a time
 				initialDepth: 0, // parents only on load
@@ -105,16 +105,11 @@ window.hudsonAmchartsInit = function (id) {
 		series.nodes.template.setAll({ draggable: false });
 
 		// No tooltips
-		// @ts-ignore - tooltipText accepts null at runtime
-		series.circles.template.set("tooltipText", null);
-		// @ts-ignore - tooltipText accepts null at runtime
-		series.outerCircles.template.set("tooltipText", null);
-		// @ts-ignore - tooltipText accepts null at runtime
-		series.nodes.template.set("tooltipText", null);
-		// @ts-ignore - tooltipText accepts null at runtime
-		series.labels.template.set("tooltipText", null);
-		// @ts-ignore - tooltipText accepts null at runtime
-		series.links.template.set("tooltipText", null);
+		series.circles.template.set("tooltipText", undefined);
+		series.outerCircles.template.set("tooltipText", undefined);
+		series.nodes.template.set("tooltipText", undefined);
+		series.labels.template.set("tooltipText", undefined);
+		series.links.template.set("tooltipText", undefined);
 
 		// Hide wrapper (depth 0)
 		series.nodes.template.adapters.add("visible", function (vis, target) {
