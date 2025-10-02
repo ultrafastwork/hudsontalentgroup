@@ -1,5 +1,14 @@
 // wp-content\plugins\hudsontalentgroup\types.ts
 
+interface ChartNode {
+	name: string;
+	value?: number;
+	url?: string;
+	children?: ChartNode[];
+	nodeSettings?: any;
+	outerSettings?: any;
+}
+
 // Global type declarations for Hudson Talent Group plugin
 
 declare global {

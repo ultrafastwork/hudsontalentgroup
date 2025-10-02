@@ -118,12 +118,16 @@ window.hudsonAmchartsInit = function (id) {
 		// No tooltips
 		// @ts-ignore - null is accepted at runtime
 		series.circles.template.set("tooltipText", null);
+
 		// @ts-ignore - null is accepted at runtime
 		series.outerCircles.template.set("tooltipText", null);
+
 		// @ts-ignore - null is accepted at runtime
 		series.nodes.template.set("tooltipText", null);
+
 		// @ts-ignore - null is accepted at runtime
 		series.labels.template.set("tooltipText", null);
+
 		// @ts-ignore - null is accepted at runtime
 		series.links.template.set("tooltipText", null);
 
@@ -141,6 +145,7 @@ window.hudsonAmchartsInit = function (id) {
 		});
 
 		// --- Colors (same palette logic) ---
+
 		/**
 		 * @param {number} r
 		 * @param {number} g
@@ -151,17 +156,19 @@ window.hudsonAmchartsInit = function (id) {
 			r /= 255;
 			g /= 255;
 			b /= 255;
-			const max = Math.max(r, g, b),
-				min = Math.min(r, g, b);
-			let h = 0,
-				s,
-				l = (max + min) / 2;
+			const max = Math.max(r, g, b);
+			const min = Math.min(r, g, b);
+			let h = 0;
+			let s;
+			let l = (max + min) / 2;
+
 			if (max === min) {
 				h = 0;
 				s = 0;
 			} else {
 				const d = max - min;
 				s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
 				switch (max) {
 					case r:
 						h = (g - b) / d + (g < b ? 6 : 0);
@@ -175,6 +182,7 @@ window.hudsonAmchartsInit = function (id) {
 				}
 				h /= 6;
 			}
+
 			return [h, s, l];
 		}
 
@@ -353,13 +361,17 @@ window.hudsonAmchartsInit = function (id) {
 		function computeRadius(di) {
 			const bp = getBP();
 			const cfg = R[bp];
+
 			// @ts-ignore - depth exists at runtime
 			const depth = di.get("depth");
 			const dc = di.dataContext || {};
 			if (depth === 0) return 0;
+
 			const parentR = cfg.parent;
 			if (depth === 1) return parentR;
+
 			let r = textBaseRadius(dc.name, bp);
+
 			if (depth === 2) {
 				r *= cfg.childScale;
 				r = Math.min(r, parentR * cfg.capChild);
@@ -367,6 +379,7 @@ window.hudsonAmchartsInit = function (id) {
 				r *= cfg.grandScale;
 				r = Math.min(r, parentR * cfg.capGrand);
 			}
+
 			r = Math.max(r, Math.min(parentR * 0.6, cfg.min * 0.9));
 			return r;
 		}
@@ -399,6 +412,7 @@ window.hudsonAmchartsInit = function (id) {
 		series.labels.template.adapters.add("maxWidth", function (max, target) {
 			const di = target.dataItem;
 			if (!di) return max;
+
 			const r = computeRadius(di);
 			return Math.max(110, Math.floor(r * 1.6));
 		});
@@ -411,23 +425,30 @@ window.hudsonAmchartsInit = function (id) {
 		// @ts-ignore - inited event exists at runtime
 		series.events.on("inited", function () {
 			const rootDI = series.dataItems[0];
+
 			// @ts-ignore - children exists at runtime
 			if (!rootDI || !rootDI.children) return;
+
 			// @ts-ignore - children exists at runtime
 			rootDI.children.each(function (/** @type {any} */ pdi) {
 				pdi.set("expanded", false);
 				// Ensure parent circles remain interactive in Brave
 				const pNode = pdi.get("node");
+
 				if (pNode) {
 					pNode.set("interactive", true);
 					pNode.set("focusable", true);
 				}
+
 				const pCircle = pdi.get("circle");
+
 				if (pCircle) {
 					pCircle.set("interactive", true);
 					pCircle.set("focusable", true);
 				}
+
 				const pOuter = pdi.get("outerCircle");
+
 				if (pOuter) {
 					pOuter.set("interactive", true);
 					pOuter.set("focusable", true);
@@ -437,20 +458,25 @@ window.hudsonAmchartsInit = function (id) {
 					pdi.children.each(function (/** @type {any} */ cdi) {
 						cdi.set("expanded", false);
 						const cn = cdi.get("node");
+
 						if (cn) {
 							cn.set("visible", false);
 							cn.set("opacity", 0);
 						}
+
 						const cl = cdi.get("link");
+
 						if (cl) cl.set("visible", false);
 						if (cdi.children) {
 							cdi.children.each(function (/** @type {any} */ gdi) {
 								gdi.set("expanded", false);
 								const gn = gdi.get("node");
+
 								if (gn) {
 									gn.set("visible", false);
 									gn.set("opacity", 0);
 								}
+
 								const gl = gdi.get("link");
 								if (gl) gl.set("visible", false);
 							});
@@ -460,20 +486,27 @@ window.hudsonAmchartsInit = function (id) {
 			});
 		});
 
-		// Show/collapse helpers
-		/** @param {any} di */
+		/**
+		 * Show/collapse helpers
+		 *
+		 * @param {any} di
+		 */
 		function hideSubtree(di) {
 			di.set("expanded", false);
+
 			if (di.children) {
 				di.children.each(function (/** @type {any} */ childDI) {
 					childDI.set("expanded", false);
 					const n = childDI.get("node");
+
 					if (n) {
 						n.set("visible", false);
 						n.set("opacity", 0);
 					}
+
 					const l = childDI.get("link");
 					if (l) l.set("visible", false);
+
 					if (childDI.children) {
 						childDI.children.each(function (/** @type {any} */ gdi) {
 							gdi.set("expanded", false);
@@ -490,9 +523,12 @@ window.hudsonAmchartsInit = function (id) {
 			}
 		}
 
-		/** @param {any} pdi */
+		/**
+		 * @param {any} pdi
+		 */
 		function showParentChildrenOnly(pdi) {
 			pdi.set("expanded", true);
+
 			if (pdi.children) {
 				pdi.children.each(function (/** @type {any} */ cdi) {
 					cdi.set("expanded", false); // keep grandchildren hidden
@@ -528,10 +564,12 @@ window.hudsonAmchartsInit = function (id) {
 						cdi.children.each(function (/** @type {any} */ gdi) {
 							gdi.set("expanded", false);
 							const gn = gdi.get("node");
+
 							if (gn) {
 								gn.set("visible", false);
 								gn.set("opacity", 0);
 							}
+
 							const gl = gdi.get("link");
 							if (gl) gl.set("visible", false);
 						});
@@ -540,21 +578,29 @@ window.hudsonAmchartsInit = function (id) {
 			}
 		}
 
-		// Leaf / clickable detection: any node that has a url
-		/** @param {any} di */
+		/**
+		 * Leaf / clickable detection: any node that has a url
+		 *
+		 * @param {any} di
+		 */
 		function isLeaf(di) {
 			const dc = di?.dataContext || {};
 			return !(dc.children && dc.children.length);
 		}
 
-		/** @param {any} di */
+		/**
+		 * @param {any} di
+		 */
 		function isClickable(di) {
 			const dc = di?.dataContext || {};
 			return isLeaf(di) && !!dc.url;
 		}
 
-		// Pointer cursor only on clickable leaves
-		/** @param {any} di */
+		/**
+		 * Pointer cursor only on clickable leaves
+		 *
+		 * @param {any} di
+		 */
 		function updateCursor(di) {
 			// For Brave compatibility, also check if node has children (expandable)
 			const dc = di?.dataContext || {};
@@ -563,7 +609,9 @@ window.hudsonAmchartsInit = function (id) {
 			root.dom.style.cursor = shouldShowPointer ? "pointer" : "default";
 		}
 
-		/** @param {any} e */
+		/**
+		 * @param {any} e
+		 */
 		const onOver = (e) => {
 			if (e && e.target && e.target.dataItem) {
 				updateCursor(e.target.dataItem);
@@ -584,12 +632,15 @@ window.hudsonAmchartsInit = function (id) {
 		series.labels.template.events.on("pointerout", onOut);
 		series.nodes.template.events.on("pointerout", onOut);
 
-		// Click handling
-		/** @param {any} di */
+		/**
+		 * Click handling
+		 *
+		 * @param {any} di
+		 */
 		function handleClick(di) {
 			if (!di) return;
 			const dc = di.dataContext || {};
-			
+
 			if (isClickable(di)) {
 				go(dc.url);
 				return;
@@ -597,17 +648,22 @@ window.hudsonAmchartsInit = function (id) {
 
 			// @ts-ignore - depth exists at runtime
 			const depth = di.get("depth");
+
 			if (depth === 1) {
 				// parent
 				const rootDI = series.dataItems[0];
+
 				// @ts-ignore - children exists at runtime
 				if (!rootDI || !rootDI.children) return;
+
 				// @ts-ignore - children exists at runtime
 				rootDI.children.each((/** @type {any} */ pdi) =>
 					pdi === di ? showParentChildrenOnly(pdi) : hideSubtree(pdi),
 				);
+
 				return;
 			}
+
 			if (depth === 2) {
 				// child
 				const expand = !di.get("expanded");
@@ -624,6 +680,7 @@ window.hudsonAmchartsInit = function (id) {
 			}
 			handleClick(e && e.target && e.target.dataItem);
 		};
+
 		// Attach to nodes only - this captures all clicks on circles, labels, etc.
 		series.nodes.template.events.on("click", onClick);
 
